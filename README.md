@@ -99,3 +99,19 @@ Content-Type: application/json
 - **Mismos nombres de campos y de enums** que las entidades de la app (`EstadoTarea.VALIDADA`, `TipoProblema.FALTA_AGUA`…), así Retrofit + Gson los convierte directo.
 - **Fechas en milisegundos** (`Long`), igual que en Room.
 - **Errores con código HTTP y mensaje:** 400 dato inválido, 401 login incorrecto, 404 no existe, 409 regla de negocio. El mensaje viene en el campo `message` de la respuesta.
+
+## Pruebas y cobertura (JaCoCo)
+
+Las pruebas usan una base **H2 en memoria** (`src/test/resources/application.properties`),
+así que **no necesitan XAMPP** encendido.
+
+```
+mvnw clean verify
+```
+
+- Corre las pruebas unitarias (servicios con Mockito) y de integración (endpoints con MockMvc).
+- Genera el informe en `target/site/jacoco/index.html`.
+- Falla si la cobertura de líneas baja del **80 %** (regla en el `pom.xml`).
+
+El código que genera Lombok (getters, setters, constructores) no se cuenta en la cobertura
+gracias a `lombok.config`.
