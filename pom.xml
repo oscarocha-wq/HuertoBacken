@@ -74,55 +74,63 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!-- JaCoCo: cobertura de pruebas.
-			     mvnw test   -> informe en target/site/jacoco/index.html
-			     mvnw verify -> además falla si la cobertura de líneas baja del 80 % -->
+			<!-- Kover: cobertura de pruebas.
+			     mvnw clean verify -> corre las pruebas, genera los informes
+			     y falla si la cobertura de líneas baja del 80 %.
+			     Informe HTML: target/site/kover/html/index.html -->
 			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.14</version>
-				<configuration>
-					<excludes>
-						<!-- Clase de arranque: solo llama a SpringApplication.run -->
-						<exclude>cl/duoc/huertoapi/HuertoApiApplication.class</exclude>
-					</excludes>
-				</configuration>
+				<groupId>org.jetbrains.kotlinx</groupId>
+				<artifactId>kover-maven-plugin</artifactId>
+				<version>0.9.8</version>
 				<executions>
 					<execution>
-						<id>preparar-agente</id>
+						<id>kover-instrumentacion</id>
 						<goals>
-							<goal>prepare-agent</goal>
+							<goal>instrumentation</goal>
 						</goals>
 					</execution>
 					<execution>
-						<id>informe</id>
-						<phase>test</phase>
+						<id>kover-html</id>
 						<goals>
-							<goal>report</goal>
+							<goal>report-html</goal>
 						</goals>
 					</execution>
 					<execution>
-						<id>minimo-80</id>
-						<phase>verify</phase>
+						<id>kover-xml</id>
 						<goals>
-							<goal>check</goal>
+							<goal>report-xml</goal>
 						</goals>
-						<configuration>
-							<rules>
-								<rule>
-									<element>BUNDLE</element>
-									<limits>
-										<limit>
-											<counter>LINE</counter>
-											<value>COVEREDRATIO</value>
-											<minimum>0.80</minimum>
-										</limit>
-									</limits>
-								</rule>
-							</rules>
-						</configuration>
+					</execution>
+					<execution>
+						<id>kover-verificar</id>
+						<goals>
+							<goal>verify</goal>
+						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<filters>
+						<excludes>
+							<!-- Clase de arranque: solo llama a SpringApplication.run -->
+							<classes>cl.duoc.huertoapi.HuertoApiApplication</classes>
+							<!-- Getters, setters y constructores que genera Lombok -->
+							<annotatedBy>lombok.Generated</annotatedBy>
+						</excludes>
+					</filters>
+					<rules>
+						<rule>
+							<name>Cobertura minima de lineas</name>
+							<groupBy>APPLICATION</groupBy>
+							<bounds>
+								<bound>
+									<coverageUnits>LINE</coverageUnits>
+									<aggregationForGroup>COVERED_PERCENTAGE</aggregationForGroup>
+									<minValue>80</minValue>
+								</bound>
+							</bounds>
+						</rule>
+					</rules>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
