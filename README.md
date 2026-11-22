@@ -2,6 +2,16 @@
 
 API REST para la app Android **Huerto Escolar** (DSY1105 · Duoc UC). Está hecha con la misma base que `miapi`: Spring Boot, JPA, MySQL y Lombok, con capas `model → repository → service → controller`.
 
+## Integrantes
+
+| Integrante | GitHub |
+|---|---|
+| Oscar Rocha | [@oscarocha-wq](https://github.com/oscarocha-wq) |
+| Yeison Jeldres | [@yeison222](https://github.com/yeison222) |
+
+**App Android que consume este microservicio:** [Huerto_escolar](https://github.com/oscarocha-wq/Huerto_escolar)
+(login, sincronización y CRUD de sectores, cultivos, tareas y problemas desde la app).
+
 ## Cómo ejecutarla
 
 1. Enciende MySQL (XAMPP o Laragon), con el usuario `root` sin clave.
