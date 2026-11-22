@@ -105,7 +105,8 @@ Content-Type: application/json
 Las pruebas usan una base **H2 en memoria** (`src/test/resources/application.properties`),
 así que **no necesitan XAMPP** encendido.
 
-```.\mvnw clean verify
+```
+.\mvnw clean verify
 ```
 
 - Corre las pruebas unitarias (servicios con Mockito) y de integración (endpoints con MockMvc).
