@@ -68,7 +68,7 @@ class ApiIntegracionTest {
                 .andExpect(jsonPath("$.id").value("EST-09"));
 
         mvc.perform(post("/usuarios").contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"id\":\"ADM-01\",\"nombre\":\"Repetido\",\"clave\":\"1\",\"perfil\":\"ADMINISTRADOR\"}"))
+                .content("{\"id\":\"ADM-01\",\"nombre\":\"Repetido\",\"clave\":\"1\",\"perfil\":\"ADMINISTRADOR\",\"activo\":true}"))
                 .andExpect(status().isConflict());
 
         mvc.perform(put("/usuarios/EST-09").contentType(MediaType.APPLICATION_JSON)
